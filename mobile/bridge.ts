@@ -1,0 +1,4 @@
+declare global {interface Window {OfficinaNative?:{request:(value:string)=>void};__officinaReply:(response:any)=>void;__officinaBack?:()=>void;__officinaFlush?:()=>void;}}
+const pending=new Map<string,{resolve:(value:any)=>void;reject:(e:Error)=>void}>();
+window.__officinaReply=response=>{const call=pending.get(response.id);if(!call)return;pending.delete(response.id);if(response.ok)call.resolve(response.value);else call.reject(new Error(response.error));};
+export function native(method:string,args:any={}):Promise<any>{if(!window.OfficinaNative)return Promise.reject(new Error('Questa funzione richiede l’APK Android.'));const id=crypto.randomUUID();return new Promise((resolve,reject)=>{pending.set(id,{resolve,reject});try{window.OfficinaNative!.request(JSON.stringify({id,method,args}));}catch(e){pending.delete(id);reject(e);}});}

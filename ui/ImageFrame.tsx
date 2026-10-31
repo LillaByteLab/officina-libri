@@ -1,0 +1,3 @@
+import React from 'react';
+import {imageView} from '../packages/page-tools.mjs';
+export default function ImageFrame({node,asset,href,x,y}:{node:any;asset:any;href:string;x:number;y:number}){const v=imageView(node),c=v.crop,w=asset.width,h=asset.height;return <svg x={x} y={y} width={node.width} height={node.height} viewBox={`${c.x*w} ${c.y*h} ${c.width*w} ${c.height*h}`} preserveAspectRatio="none" overflow="hidden"><image href={href} x={0} y={0} width={w} height={h} transform={`translate(${v.mirrorX?(2*c.x+c.width)*w:0} ${v.mirrorY?(2*c.y+c.height)*h:0}) scale(${v.mirrorX?-1:1} ${v.mirrorY?-1:1})`}/></svg>;}

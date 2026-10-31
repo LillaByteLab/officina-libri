@@ -1,0 +1,15 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'app.officinalibri'
+    compileSdk 36
+    defaultConfig { applicationId 'app.officinalibri'; minSdk 28; targetSdk 35; versionCode 5; versionName '0.1.4-prova' }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    buildTypes { debug { debuggable true }; release { minifyEnabled false } }
+    testOptions { unitTests.includeAndroidResources = true; unitTests.all { inputs.file(rootProject.file('../output/android-fixtures/from-desktop.officinazip')); systemProperty 'officina.driveFixture', rootProject.file('../output/drive-fixtures').absolutePath; systemProperty 'officina.fixture', rootProject.file('../output/android-fixtures/from-desktop.officinazip').absolutePath; systemProperty 'officina.output', rootProject.file('../output/android-fixtures/from-android.officinazip').absolutePath } }
+}
+dependencies {
+    implementation 'androidx.webkit:webkit:1.13.0'
+    implementation 'com.google.android.gms:play-services-auth:22.0.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.json:json:20240303'
+}

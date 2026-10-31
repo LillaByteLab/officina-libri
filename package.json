@@ -1,0 +1,61 @@
+{
+  "name": "officina-libri-public",
+  "version": "0.0.17-beta.1",
+  "private": true,
+  "description": "Laboratorio editoriale locale — beta pubblica",
+  "license": "MIT",
+  "main": "desktop/main.cjs",
+  "type": "module",
+  "scripts": {
+    "test:mobile-browser": "node tests/mobile-browser.mjs",
+    "test:transfer-desktop": "node tests/transfer-desktop.mjs",
+    "build:mobile": "tsc --noEmit && vite build --config vite.mobile.config.mjs",
+    "start": "electron .",
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "test": "node --test tests/*.test.mjs",
+    "test:desktop": "node tests/desktop.mjs && node tests/kdp-desktop.mjs",
+    "test:images-desktop": "node tests/images-desktop.mjs",
+    "test:upscayl": "node tests/upscayl-integration.mjs",
+    "test:ebook-desktop": "node tests/ebook-desktop.mjs",
+    "test:epubcheck": "node tests/ebook-integration.mjs",
+    "test:word-complete-desktop": "node tests/word-complete-desktop.mjs",
+    "test:word-desktop": "node tests/word-desktop.mjs",
+    "test:templates-desktop": "node tests/templates-desktop.mjs",
+    "test:novel-desktop": "node tests/novel-desktop.mjs",
+    "check": "npm run build && npm test",
+    "licenses": "node scripts/licenses.mjs",
+    "lint": "eslint packages desktop scripts tests/*.mjs && tsc --noEmit",
+    "build:windows": "node scripts/build-windows.mjs"
+  },
+  "dependencies": {
+    "@myriaddreamin/typst-ts-node-compiler": "0.7.0",
+    "@pdf-lib/fontkit": "1.1.1",
+    "@xmldom/xmldom": "0.9.12",
+    "fflate": "0.8.3",
+    "pdf-lib": "1.17.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "sharp": "0.35.5",
+    "yauzl": "3.4.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "electron": "45.0.0",
+    "electron-builder": "26.18.0",
+    "eslint": "^10.13.0",
+    "playwright": "^1.56.0",
+    "typescript": "^5.9.0",
+    "vite": "8.3.5"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "author": "Officina Libri",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LillaByteLab/officina-libri.git"
+  }
+}

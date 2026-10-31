@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {detectPreviewer,previewerArguments} from '../packages/ebook-tools.mjs';
+test('Rileva Previewer 4 nella cartella standard, ignorando Kindle Create',async()=>{const root=await fs.mkdtemp(path.join(os.tmpdir(),'officina-preview-path-'));await fs.mkdir(path.join(root,'Kindle Create'));await fs.writeFile(path.join(root,'Kindle Create','Kindle Create.exe'),'fixture di percorso: non eseguibile');assert.equal(await detectPreviewer([root]),null);const folder=path.join(root,'Kindle Previewer 4');await fs.mkdir(folder);await fs.writeFile(path.join(folder,'Kindle Previewer.exe'),'fixture di percorso: non eseguibile');assert.equal(await detectPreviewer([root]),path.join(folder,'Kindle Previewer.exe'));});
+test('Cartella assente non equivale a programma disponibile',async()=>{assert.equal(await detectPreviewer([path.join(os.tmpdir(),'officina-missing-'+Date.now())]),null);});
+test('Previewer 4 usa showpreview con due trattini e output separato',()=>{assert.deepEqual(previewerArguments('C:/input/anteprima.epub','C:/Amazon/Kindle Previewer 4/KindlePreviewer4.exe','C:/output'),['C:/input/anteprima.epub','--showpreview','--output','C:/output','--locale','it']);});
+test('Rileva l’alias MSIX senza richiedere la vecchia cartella Amazon',async()=>{const root=await fs.mkdtemp(path.join(os.tmpdir(),'officina-msix-path-')),alias=path.join(root,'kindlepreviewer4.exe');await fs.writeFile(alias,'fixture non eseguibile');assert.equal(await detectPreviewer([], [alias]),alias);assert.equal(previewerArguments('input.epub','C:/WindowsApps/KindlePreviewerApp_4.0.3/KindlePreviewerCLI.exe','out')[1],'--showpreview');});
