@@ -14,7 +14,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "test": "node --test tests/*.test.mjs",
-    "test:desktop": "node tests/desktop.mjs && node tests/kdp-desktop.mjs",
+    "test:desktop": "node tests/desktop.mjs && node tests/kdp-desktop.mjs && node tests/editor-regressions-desktop.mjs",
     "test:images-desktop": "node tests/images-desktop.mjs",
     "test:upscayl": "node tests/upscayl-integration.mjs",
     "test:ebook-desktop": "node tests/ebook-desktop.mjs",

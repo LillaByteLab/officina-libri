@@ -117,6 +117,7 @@ function App() {
   }
   useEffect(()=>{const f=(e:KeyboardEvent)=>{
     if(e.key==='Escape'&&drag.current){finishDrag(true);return;}
+    if(e.defaultPrevented||document.querySelector('dialog:modal'))return;
     if(!project||!selected||busy||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;
     if(e.target instanceof HTMLInputElement||e.target instanceof HTMLTextAreaElement||e.target instanceof HTMLSelectElement)return;
     const selectedNode=project.pages.flatMap(p=>p.nodes).find(n=>n.id===selected);if(!selectedNode)return;

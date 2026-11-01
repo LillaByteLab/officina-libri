@@ -18,7 +18,9 @@ export default function NovelDialog({onClose,onEpub,onDirty,project,fontFamily}:
  const [showTemplates,setShowTemplates]=useState(false),[undoTemplate,setUndoTemplate]=useState('');
  const effectiveFamily=draft?.layout?'Novel'+draft.layout.font.sha256:fontFamily;
  const section=draft?.sections.find(s=>s.id===selected);
- const [paragraphIndex,setParagraphIndex]=useState(0),[wordWarnings,setWordWarnings]=useState<string[]>([]),[assetPreview,setAssetPreview]=useState<Record<string,string>>({});
+ const [requestedParagraphIndex,setParagraphIndex]=useState(0),[wordWarnings,setWordWarnings]=useState<string[]>([]),[assetPreview,setAssetPreview]=useState<Record<string,string>>({});
+ // Clamp during render: the selection-reset effect runs after the new section renders.
+ const paragraphIndex=Math.min(requestedParagraphIndex,Math.max(0,(section?.paragraphs?.length||0)-1));
  useEffect(()=>{setParagraphIndex(0);},[selected]);
  const fontKeys=Object.keys(draft?.fonts||{}).join(',');
  useEffect(()=>{if(!draft?.fonts)return;let live=true;const loaded:FontFace[]=[];void api.novelFontPayload(draft.fonts).then(async(values:{key:string;base64:string}[])=>{for(const v of values){const bytes=Uint8Array.from(atob(v.base64),c=>c.charCodeAt(0)),face=new FontFace('Novel'+v.key,bytes);await face.load();if(live){document.fonts.add(face);loaded.push(face);}}}).catch(e=>setError(e.message));return()=>{live=false;loaded.forEach(f=>document.fonts.delete(f));};},[fontKeys]);
