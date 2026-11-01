@@ -15,3 +15,15 @@ I test richiedono strumenti e font installati legittimamente. Python usa le dipe
 Non verificati in questa edizione: Windows Intel/AMD/x64, firma digitale, progetti reali grandi, stampa fisica e prova colore calibrata, audit assistivo completo, servizio Drive pubblico pronto all’uso senza configurazione, APK pubblica. La compatibilità di una fixture non garantisce importazione universale o idoneità KDP. Le prove cloud simulate non sono test reali di tutte le interruzioni o conflitti.
 
 Il repository parte da una nuova cronologia contenente solo questa selezione pubblica; nessuna cronologia privata viene inviata. Gli output dei test, documenti e log locali restano esclusi.
+
+## Correzioni editor — verifica sorgenti Windows x64, 1 novembre 2026
+
+Su Windows 11 x64, Node 24.22.2 e Electron del lockfile:
+
+- `npm test`: 105/105 test superati.
+- `npm run lint` e `npm run build`: superati.
+- `npm run test:desktop`: editor, backup/ripristino, PDF, KDP e due nuove regressioni superati.
+- `node tests/templates-desktop.mjs`: modelli, persistenza, PDF e annullamento superati.
+- Le nuove regressioni fallivano entrambe prima delle correzioni. Verificano il cambio verso un capitolo più corto senza perdere la bozza e l'assenza di spostamenti della pagina quando una freccia viene premuta in un dialogo modale; la scorciatoia continua a funzionare nell'editor.
+
+Questa verifica riguarda l'app avviata dai sorgenti su x64, non l'installer ARM64 né un nuovo installer x64. Upscayl e collegamento a un account Google reale non sono inclusi nel collaudo delle correzioni.
